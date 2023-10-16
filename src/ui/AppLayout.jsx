@@ -7,7 +7,7 @@ const AppLayout = () => {
       <Sidebar />
       <div className="flex flex-col w-screen  ">
         <Navbar />
-        <main>
+        <main className="ml-20">
           <Outlet />
         </main>
       </div>

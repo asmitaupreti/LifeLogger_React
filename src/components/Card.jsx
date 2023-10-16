@@ -1,9 +1,16 @@
 import { useState } from "react";
 import { FiEdit } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 const Card = () => {
+  const navigate = useNavigate();
+
+ 
   const [toggleEditMenu, setToggleEditMenu] = useState(false);
   return (
-    <div className="bg-white p-8 rounded-lg shadow-sm flex flex-col gap-y-2 justify-center relative ">
+    <div 
+    className="bg-white p-8 rounded-lg shadow-sm flex flex-col gap-y-2 justify-center relative "
+    
+    >
       <div
         className="absolute top-1 right-1 p-2.5  items-center flex justify-center "
         onClick={() => setToggleEditMenu(true)}
@@ -30,15 +37,18 @@ const Card = () => {
         </div>
       )}
 
-      <h2 className="text-xl font-medium">UX Adujstments</h2>
+      <h2 className="text-lg font-medium">UX Adujstments</h2>
       <p className="text-sm text-slate-400">
         It just need to adjust the Ui from what you did before
       </p>
-      <div className="flex gap-3 items-center justify-between">
-        <div className=" flex gap-3 flex-wrap">
-          <p className="text-xs bg-purple-100 p-1.5 rounded-md">Research</p>
-          <p className="text-xs bg-purple-100 p-1.5 rounded-md">Research</p>
-        </div>
+      <div className="border-[1px] border-red-50 mt-4 mb-2 mx-[-32px]"></div>
+      <div className="flex  items-center justify-between h-5">
+        
+          <p className="text-xs bg-purple-100 p-2 rounded-md cursor-pointer"
+          onClick={()=>navigate("/lifemilestone")}
+          >Life Milestone</p>
+        
+     
         <div className="bg-orange-100 px-3 py-2 rounded-full">
           <p className="text-xs">3</p>
         </div>

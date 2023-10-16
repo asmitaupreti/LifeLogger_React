@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-function CreateProject() {
+function CreateLifeProject() {
   const navigate = useNavigate();
   // const [startDate, setStartDate] = useState(new Date());
   return (
@@ -95,4 +95,4 @@ function CreateProject() {
   );
 }
 
-export default CreateProject;
+export default CreateLifeProject;
