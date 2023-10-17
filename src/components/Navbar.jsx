@@ -1,6 +1,5 @@
-import Button from "./Button";
+// import Button from "./Button";
 import Search from "./Search";
-
 
 const Nav = () => {
   // const navigate = useNavigate();

@@ -12,10 +12,14 @@ function App() {
     <>
       <Routes location={previousLocation || location}>
         <Route element={<AppLayout />}>
-          <Route index element={<Navigate replace to="/dashboard" />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/lifemilestone" element={<LifeMilestone />} />
-          <Route path="/lifeincident" element={<LifeIncident />} />
+          <Route index element={<Navigate replace to="/lifeproject" />} />
+          <Route path="/lifeproject">
+            <Route index element={<Dashboard />} />
+            <Route path=":id/lifemilestone">
+              <Route index element={<LifeMilestone />} />
+              <Route path=":id/lifeincident" element={<LifeIncident />} />
+            </Route>
+          </Route>
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<PageNotFound />} />
