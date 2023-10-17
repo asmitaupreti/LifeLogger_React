@@ -5,11 +5,15 @@ import FormSubmitButton from "../ui/FormSubmitButton";
 import FormCheckbox from "../ui/FormCheckbox";
 import ModelLayout from "../ui/ModelLayout";
 
-function CreateLifeProject() {
+const CreateLifeMilestone = () => {
   const navigate = useNavigate();
-  // const [startDate, setStartDate] = useState(new Date());
+
   return (
-    <ModelLayout label="Create Life Project" navigate={navigate} navigateTo="/">
+    <ModelLayout
+      label="Create Life Milestone"
+      navigate={navigate}
+      navigateTo={-1}
+    >
       <form action="/" method="post">
         <div className="grid grid-cols-1 gap-6 mt-4 md:grid-cols-2">
           <FormInput label="Title" name="project-name" />
@@ -26,6 +30,6 @@ function CreateLifeProject() {
       </form>
     </ModelLayout>
   );
-}
+};
 
-export default CreateLifeProject;
+export default CreateLifeMilestone;

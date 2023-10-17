@@ -4,10 +4,13 @@ import { Dashboard, Login, PageNotFound } from "./pages";
 import CreateLifeProject from "./features/CreateLifeProject";
 import LifeMilestone from "./pages/LifeMilestone";
 import LifeIncident from "./pages/LifeIncident";
+import CreateLifeMilestone from "./features/CreateLifeMilestone";
+import CreateLifeIncident from "./features/CreateLifeIncident";
 
 function App() {
   const location = useLocation();
   const previousLocation = location.state?.previousLocation;
+
   return (
     <>
       <Routes location={previousLocation || location}>
@@ -26,7 +29,15 @@ function App() {
       </Routes>
       {previousLocation && (
         <Routes>
-          <Route path="/createProject" element={<CreateLifeProject />} />
+          <Route path="/createlifeproject" element={<CreateLifeProject />} />
+          <Route
+            path={`${previousLocation.pathname}/createlifemilestone`}
+            element={<CreateLifeMilestone />}
+          />
+          <Route
+            path={`${previousLocation.pathname}/createlifeincident`}
+            element={<CreateLifeIncident />}
+          />
         </Routes>
       )}
     </>

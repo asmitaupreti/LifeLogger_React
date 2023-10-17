@@ -7,7 +7,6 @@ import DisplayProject from "../features/DisplayProject";
 const Dashboard = () => {
   const navigate = useNavigate();
 
-  const handleButtonClick = () => navigate("/createProject");
   return (
     <div className="bg-slate-50  flex  h-screen ">
       <div className="  container mx-auto   ">
@@ -15,7 +14,7 @@ const Dashboard = () => {
           {/* <h1 className="text-xl font-bold text-slate-500">Life Project</h1> */}
 
           <Breadcrumbheader />
-          <Button handleClick={handleButtonClick} name={"Create Project"} />
+          <Button navigateto="/createlifeproject" name={"Create Project"} />
         </div>
         <DisplayProject navigate={navigate} />
       </div>

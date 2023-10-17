@@ -6,7 +6,6 @@ const Breadcrumbheader = () => {
   const pathSegments = location.pathname.split("/").filter((crumb) => {
     return isNaN(crumb);
   });
-  console.log(pathSegments);
   return (
     <div>
       <Breadcrumb pathSegments={pathSegments} />

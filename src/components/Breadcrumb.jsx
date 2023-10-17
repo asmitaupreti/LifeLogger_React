@@ -7,7 +7,6 @@ const breadcrumbMapping = {
 };
 
 const Breadcrumb = ({ pathSegments }) => {
-  console.log(pathSegments, "Breadcrumb");
   return (
     <ul className="flex gap-x-1">
       {pathSegments.map((segment, index) => (
