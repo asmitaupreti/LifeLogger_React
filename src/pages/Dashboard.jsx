@@ -8,9 +8,9 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-slate-50  flex  h-screen ">
-      <div className="  container mx-auto   ">
-        <div className="mx-5 h-24 font-medium flex justify-between items-center">
+    <div className="bg-slate-50  flex  h-screen z-0 ">
+      <div className="  container mx-auto  ">
+        <div className="mx-5 h-24 font-medium flex justify-between items-center ">
           {/* <h1 className="text-xl font-bold text-slate-500">Life Project</h1> */}
 
           <Breadcrumbheader />

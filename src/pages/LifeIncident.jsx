@@ -11,7 +11,7 @@ const LifeIncident = () => {
       <div className="  container mx-auto   ">
         <div className="mx-5 h-24 font-medium flex justify-between items-center">
           <Breadcrumbheader />
-          <Button navigateto="/createlifeincident" name={"Create Incident"} />
+          <Button navigateto="createlifeincident" name={"Create Incident"} />
         </div>
         <DisplayIncident navigate={navigate} />
       </div>
