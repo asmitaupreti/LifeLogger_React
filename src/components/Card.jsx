@@ -1,8 +1,23 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { FiEdit } from "react-icons/fi";
+import { deleteLifeProject } from "../services/apiLifeProjects";
+import toast from "react-hot-toast";
 // import { useNavigate } from "react-router-dom";
 const Card = ({ navigate, item }) => {
+  const queryClient = useQueryClient();
   const [toggleEditMenu, setToggleEditMenu] = useState(false);
+  const { isLoading: isDeleting, mutate } = useMutation({
+    mutationFn: (id) => deleteLifeProject(id),
+    onSuccess: () => {
+      toast.success("Life Project deleted successfully");
+
+      queryClient.invalidateQueries({
+        queryKey: ["lifeproject"],
+      });
+    },
+    onError: (err) => toast.error(err.message),
+  });
   return (
     <div className="bg-white p-8 rounded-lg shadow-sm flex flex-col gap-y-2 justify-center relative ">
       <div
@@ -25,6 +40,8 @@ const Card = ({ navigate, item }) => {
           <button
             type="submit"
             className="bg-black w-[30%] p-2.5 text-white rounded-md shadow-md"
+            onClick={() => mutate(item.id)}
+            disabled={isDeleting}
           >
             Delete
           </button>

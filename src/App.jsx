@@ -6,13 +6,23 @@ import LifeMilestone from "./pages/LifeMilestone";
 import LifeIncident from "./pages/LifeIncident";
 import CreateLifeMilestone from "./features/CreateLifeMilestone";
 import CreateLifeIncident from "./features/CreateLifeIncident";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "react-hot-toast";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0,
+    },
+  },
+});
 
 function App() {
   const location = useLocation();
   const previousLocation = location.state?.previousLocation;
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Routes location={previousLocation || location}>
         <Route element={<AppLayout />}>
           <Route index element={<Navigate replace to="/lifeproject" />} />
@@ -40,7 +50,25 @@ function App() {
           />
         </Routes>
       )}
-    </>
+      <Toaster
+        position="top-center"
+        gutter={12}
+        containerStyle={{ margin: "8px" }}
+        toastOptions={{
+          success: {
+            duration: 3000,
+          },
+          error: {
+            duration: 5000,
+          },
+          style: {
+            fontSize: "16px",
+            maxWidth: "500px",
+            padding: "16px 24px",
+          },
+        }}
+      />
+    </QueryClientProvider>
   );
 }
 
