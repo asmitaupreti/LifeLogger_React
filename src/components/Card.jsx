@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 const Card = ({ navigate, item }) => {
   const queryClient = useQueryClient();
   const [toggleEditMenu, setToggleEditMenu] = useState(false);
+
   const { isLoading: isDeleting, mutate } = useMutation({
     mutationFn: (id) => deleteLifeProject(id),
     onSuccess: () => {

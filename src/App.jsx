@@ -8,6 +8,7 @@ import CreateLifeMilestone from "./features/CreateLifeMilestone";
 import CreateLifeIncident from "./features/CreateLifeIncident";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
+import ProtectedLayout from "./ui/ProtectedLayout";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,7 +25,13 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Routes location={previousLocation || location}>
-        <Route element={<AppLayout />}>
+        <Route
+          element={
+            <ProtectedLayout>
+              <AppLayout />
+            </ProtectedLayout>
+          }
+        >
           <Route index element={<Navigate replace to="/lifeproject" />} />
           <Route path="/lifeproject">
             <Route index element={<Dashboard />} />

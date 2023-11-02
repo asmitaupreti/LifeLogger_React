@@ -24,7 +24,25 @@ export async function createLifeProjects(data) {
     return response.data;
   } catch (error) {
     console.log(error);
-    throw new Error("Life Projects couldnot be loaded");
+    throw new Error("Life Projects couldnot be created");
+  }
+}
+
+export async function updateLifeProjects(data) {
+  try {
+    const response = await axios.put(
+      `https://dummyjson.com/products/${data.id}`,
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Life Projects couldnot be updated");
   }
 }
 
