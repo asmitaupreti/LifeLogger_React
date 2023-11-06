@@ -1,8 +1,11 @@
 import axios from "axios";
+import { axiosPrivate } from "./axiosInstance";
 
 export async function getLifeProjects() {
   try {
-    const response = await axios.get("https://dummyjson.com/products");
+    const response = await axiosPrivate.get(
+      `/Lifeproject/${"3176c74b-730f-4db1-8bf9-e2fe0aa93d3f"}`
+    );
     return response.data;
   } catch (error) {
     console.log(error);

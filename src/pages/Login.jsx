@@ -1,29 +1,34 @@
 import { useForm } from "react-hook-form";
 // import FormInput from "../ui/FormInput";
 import FormSubmitButton from "../ui/FormSubmitButton";
-import { useMutation } from "@tanstack/react-query";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import { login } from "../services/apiAuthentication";
+// import { useMutation } from "@tanstack/react-query";
+// import toast from "react-hot-toast";
+// import { useNavigate, useLocation } from "react-router-dom";
+// import { login } from "../services/apiAuthentication";
 import { logo } from "../assets";
+import { useLogin } from "../hooks/useLogin";
+// import useAuth from "../hooks/useAuth";
 
 const Login = () => {
   const { register, handleSubmit, formState } = useForm();
+
   const { errors } = formState;
-  const navigate = useNavigate();
 
-  const { mutate, isLoading } = useMutation({
-    mutationFn: (data) => login(data),
-    onSuccess: () => {
-      toast.success("Successfully Logged in");
+  const { userLogin, isLoading } = useLogin();
 
-      navigate("/lifeproject");
-    },
-    onError: (err) => toast.error(err.message),
-  });
+  // const { mutate, isLoading } = useMutation({
+  //   mutationFn: (data) => login(data),
+  //   onSuccess: (response) => {
+  //     setAuth(response);
+  //     toast.success("Successfully Logged in");
+
+  //     navigate(from, { replace: true });
+  //   },
+  //   onError: (err) => toast.error(err.message),
+  // });
 
   function onSubmit(data) {
-    mutate({ email: "testadmin@test.de", password: "Admin123*" });
+    userLogin({ email: "testadmin@test.de", password: "Admin123*" });
     console.log(data, "from form");
   }
 
