@@ -1,12 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { FiEdit } from "react-icons/fi";
-import { deleteLifeProject } from "../services/apiLifeProjects";
+
 import toast from "react-hot-toast";
+import { useApiLifeProject } from "../services/useApiLifeProject";
 // import { useNavigate } from "react-router-dom";
 const Card = ({ navigate, item }) => {
   const queryClient = useQueryClient();
   const [toggleEditMenu, setToggleEditMenu] = useState(false);
+  const { deleteLifeProject } = useApiLifeProject();
 
   const { isLoading: isDeleting, mutate } = useMutation({
     mutationFn: (id) => deleteLifeProject(id),

@@ -24,8 +24,8 @@ function App() {
   const previousLocation = location.state?.previousLocation;
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
         <Routes location={previousLocation || location}>
           <Route
             element={
@@ -77,8 +77,8 @@ function App() {
             },
           }}
         />
-      </AuthProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </AuthProvider>
   );
 }
 

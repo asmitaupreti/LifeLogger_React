@@ -2,9 +2,10 @@ import DisplaylistLayout from "../ui/DisplaylistLayout";
 
 import { Card, Spinner } from "../components";
 import { useQuery } from "@tanstack/react-query";
-import { getLifeProjects } from "../services/apiLifeProjects";
+import { useApiLifeProject } from "../services/useApiLifeProject";
 
 const DisplayProject = ({ navigate }) => {
+  const { getLifeProjects } = useApiLifeProject();
   const { isLoading, data, error } = useQuery({
     queryKey: ["lifeproject"],
     queryFn: getLifeProjects,
@@ -15,7 +16,7 @@ const DisplayProject = ({ navigate }) => {
   if (error) return <div>Failed to load</div>;
   return (
     <DisplaylistLayout>
-      {data.products.map((item, index) => (
+      {data.map((item, index) => (
         <Card key={index} item={item} navigate={navigate} />
       ))}
     </DisplaylistLayout>

@@ -1,8 +1,8 @@
-import { axiosInstance, axiosPrivate } from "./axiosInstance";
+import { publicAxios } from "./axiosInstance";
 
 export async function login(data) {
   try {
-    const response = await axiosInstance.post("Auth/login", data);
+    const response = await publicAxios.post("Auth/login", data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -10,19 +10,19 @@ export async function login(data) {
   }
 }
 
-export async function getCurrentUser() {
-  try {
-    const response = await axiosPrivate.get("User/GetCurrentUser");
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Couldnot get current user");
-  }
-}
+// export  async function getCurrentUser() {
+//   try {
+//     const response = await authAxios.get("User/GetCurrentUser");
+//     return response.data;
+//   } catch (error) {
+//     console.log(error);
+//     throw new Error("Couldnot get current user");
+//   }
+// }
 
-export async function refreshToken() {
+export async function refreshToken(data) {
   try {
-    const response = await axiosPrivate.get("Auth/Refresh");
+    const response = await publicAxios.post("Auth/Refresh", data);
     return response.data;
   } catch (error) {
     console.log(error);

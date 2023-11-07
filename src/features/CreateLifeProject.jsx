@@ -7,10 +7,11 @@ import ModelLayout from "../ui/ModelLayout";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { createLifeProjects } from "../services/apiLifeProjects";
+import { useApiLifeProject } from "../services/useApiLifeProject";
 
 function CreateLifeProject() {
   const navigate = useNavigate();
+  const { createLifeProjects } = useApiLifeProject();
 
   const queryClient = useQueryClient();
 
