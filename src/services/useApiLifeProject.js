@@ -2,6 +2,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 export const useApiLifeProject = () => {
   const authAxios = useAxiosPrivate();
+
   async function getLifeProjects() {
     try {
       const response = await authAxios.get(
