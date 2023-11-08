@@ -3,12 +3,14 @@ import DisplaylistLayout from "../ui/DisplaylistLayout";
 import { Card, Spinner } from "../components";
 import { useQuery } from "@tanstack/react-query";
 import { useApiLifeProject } from "../services/useApiLifeProject";
+import useAuth from "../hooks/useAuth";
 
 const DisplayProject = ({ navigate }) => {
   const { getLifeProjects } = useApiLifeProject();
+  const { auth } = useAuth();
   const { isLoading, data, error } = useQuery({
     queryKey: ["lifeproject"],
-    queryFn: getLifeProjects,
+    queryFn: () => getLifeProjects(auth?.user?.id),
   });
 
   if (isLoading) return <Spinner />;

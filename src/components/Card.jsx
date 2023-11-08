@@ -4,14 +4,18 @@ import { FiEdit } from "react-icons/fi";
 
 import toast from "react-hot-toast";
 import { useApiLifeProject } from "../services/useApiLifeProject";
+import ModelLayout from "../ui/ModelLayout";
+import CreateLifeProject from "../features/CreateLifeProject";
 // import { useNavigate } from "react-router-dom";
-const Card = ({ navigate, item }) => {
+
+const Card = ({ item }) => {
   const queryClient = useQueryClient();
   const [toggleEditMenu, setToggleEditMenu] = useState(false);
+  const [showCreateLifeProject, setshowCreateLifeProject] = useState(false);
   const { deleteLifeProject } = useApiLifeProject();
 
   const { isLoading: isDeleting, mutate } = useMutation({
-    mutationFn: (id) => deleteLifeProject(id),
+    mutationFn: (data) => deleteLifeProject(data),
     onSuccess: () => {
       toast.success("Life Project deleted successfully");
 
@@ -37,13 +41,14 @@ const Card = ({ navigate, item }) => {
           <button
             type="submit"
             className="bg-orange-700 w-[30%] p-2.5 text-white rounded-md shadow-md"
+            onClick={() => setshowCreateLifeProject(true)}
           >
             Edit
           </button>
           <button
             type="submit"
             className="bg-black w-[30%] p-2.5 text-white rounded-md shadow-md"
-            onClick={() => mutate(item.id)}
+            onClick={() => mutate(item)}
             disabled={isDeleting}
           >
             Delete
@@ -57,7 +62,7 @@ const Card = ({ navigate, item }) => {
       <div className="flex  items-center justify-between h-5">
         <p
           className="text-xs bg-purple-100 p-2 rounded-md cursor-pointer"
-          onClick={() => navigate(`${item.id}/${item.navigationurl}`)}
+          // onClick={() => navigate(`${item.id}/${item.navigationurl}`)}
         >
           {item.navigateto}
         </p>
@@ -66,6 +71,14 @@ const Card = ({ navigate, item }) => {
           <p className="text-xs">{item.childrenCount}</p>
         </div>
       </div>
+      {showCreateLifeProject && (
+        <ModelLayout
+          label="Edit Life Project"
+          onClick={setshowCreateLifeProject}
+        >
+          <CreateLifeProject projectEdit={item} />
+        </ModelLayout>
+      )}
     </div>
   );
 };

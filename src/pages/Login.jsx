@@ -16,17 +16,6 @@ const Login = () => {
 
   const { userLogin, isLoading } = useLogin();
 
-  // const { mutate, isLoading } = useMutation({
-  //   mutationFn: (data) => login(data),
-  //   onSuccess: (response) => {
-  //     setAuth(response);
-  //     toast.success("Successfully Logged in");
-
-  //     navigate(from, { replace: true });
-  //   },
-  //   onError: (err) => toast.error(err.message),
-  // });
-
   function onSubmit(data) {
     userLogin({ email: "testadmin@test.de", password: "Admin123*" });
     console.log(data, "from form");

@@ -1,9 +1,9 @@
 const ModelLayout = (prop) => {
-  const { label, navigate, navigateTo, children } = prop;
+  const { label, onClick, children } = prop;
   return (
     <div
-      className="fixed left-0 top-0 w-full h-full overflow-y-scroll bg-black/30 flex flex-col justify-center items-center"
-      onClick={() => navigate(navigateTo)}
+      className="fixed left-0 top-0 w-full h-full overflow-y-scroll bg-black/30 flex flex-col justify-center items-center z-10"
+      onClick={() => onClick(false)}
     >
       <div
         onClick={(e) => e.stopPropagation()}

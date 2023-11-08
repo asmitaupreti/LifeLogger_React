@@ -1,33 +1,41 @@
-import { useNavigate } from "react-router-dom";
 import FormInput from "../ui/FormInput";
 import FormTextarea from "../ui/FormTextarea";
 import FormSubmitButton from "../ui/FormSubmitButton";
 import FormCheckbox from "../ui/FormCheckbox";
-import ModelLayout from "../ui/ModelLayout";
+
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useApiLifeProject } from "../services/useApiLifeProject";
+import useAuth from "../hooks/useAuth";
+import { formateDate } from "../helper/dateFormatter";
 
-function CreateLifeProject() {
-  const navigate = useNavigate();
-  const { createLifeProjects } = useApiLifeProject();
+function CreateLifeProject({ projectEdit }) {
+  const { createLifeProjects, updateLifeProjects } = useApiLifeProject();
+  const { auth } = useAuth();
 
   const queryClient = useQueryClient();
 
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState } = useForm({
+    defaultValues: projectEdit
+      ? {
+          ...projectEdit,
+          startTime: formateDate(projectEdit.startTime),
+          endTime: formateDate(projectEdit.endTime),
+        }
+      : {},
+  });
   const { errors } = formState;
 
   const { mutate, isLoading } = useMutation({
-    mutationFn: (data) => createLifeProjects(data),
+    mutationFn: (data) =>
+      projectEdit ? updateLifeProjects(data) : createLifeProjects(data),
     onSuccess: () => {
       toast.success("Life Project added successfully");
 
       queryClient.invalidateQueries({
         queryKey: ["lifeproject"],
       });
-
-      navigate(-1);
     },
     onError: (err) => toast.error(err.message),
   });
@@ -42,60 +50,63 @@ function CreateLifeProject() {
   }
 
   return (
-    <ModelLayout label="Create Life Project" navigate={navigate} navigateTo="/">
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <div className="grid grid-cols-1 gap-6 mt-4 md:grid-cols-2">
-          <FormInput
-            label="Title"
-            name="title"
-            register={register}
-            rules={{ required: "This field is required" }}
-            error={errors?.title?.message}
-          />
+    <form onSubmit={handleSubmit(onSubmit, onError)}>
+      <div className="grid grid-cols-1 gap-6 mt-4 md:grid-cols-2">
+        <input
+          type="hidden"
+          {...register("userID", { value: auth?.user?.id })}
+          defaultValue={auth?.user?.id}
+        />
+        <FormInput
+          label="Title"
+          name="title"
+          register={register}
+          rules={{ required: "This field is required" }}
+          error={errors?.title?.message}
+        />
 
-          <FormInput
-            label="Location"
-            name="brand"
-            register={register}
-            rules={{ required: "This field is required" }}
-            error={errors?.brand?.message}
-          />
+        <FormInput
+          label="Location"
+          name="location"
+          register={register}
+          rules={{ required: "This field is required" }}
+          error={errors?.location?.message}
+        />
 
-          <FormInput
-            label="Start Date"
-            type="date"
-            name="projectstartdate"
-            register={register}
-            rules={{ required: "This field is required" }}
-            error={errors?.projectstartdate?.message}
-          />
+        <FormInput
+          label="Start Date"
+          type="date"
+          name="startTime"
+          register={register}
+          rules={{ required: "This field is required" }}
+          error={errors?.startTime?.message}
+        />
 
-          <FormInput
-            label="End Date"
-            type="date"
-            name="projectenddate"
-            register={register}
-            rules={{ required: "This field is required" }}
-            error={errors?.projectenddate?.message}
-          />
-          <FormTextarea
-            label="Description"
-            name="description"
-            register={register}
-            rules={{ required: "This field is required" }}
-            error={errors?.description?.message}
-          />
-          <FormCheckbox
-            label="This Life Project ist set to be public"
-            name="ispublic"
-            register={register}
-            rules={{ required: "This field is required" }}
-            error={errors?.ispublic?.message}
-          />
-        </div>
-        <FormSubmitButton label="Submit" disabled={isLoading} />
-      </form>
-    </ModelLayout>
+        <FormInput
+          label="End Date"
+          type="date"
+          name="endTime"
+          register={register}
+          rules={{ required: "This field is required" }}
+          error={errors?.endTime?.message}
+        />
+        <FormTextarea
+          label="Description"
+          name="description"
+          register={register}
+          rules={{ required: "This field is required" }}
+          error={errors?.description?.message}
+        />
+        <FormCheckbox
+          label="This Life Project ist set to be public"
+          name="isPublic"
+          register={register}
+          rules={{ required: "This field is required" }}
+          error={errors?.ispublic?.message}
+        />
+      </div>
+      <FormSubmitButton label="Submit" disabled={isLoading} />
+    </form>
   );
 }
 

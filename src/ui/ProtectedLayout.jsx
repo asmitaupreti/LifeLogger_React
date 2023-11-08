@@ -1,11 +1,8 @@
-import { useLocation, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 const ProtectedLayout = ({ children }) => {
   const { auth } = useAuth();
-  const location = useLocation();
-
-  console.log(auth, "auth");
 
   return auth?.user ? (
     children
