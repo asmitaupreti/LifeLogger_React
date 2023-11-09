@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import AppLayout from "./ui/AppLayout";
-import { Dashboard, Login, PageNotFound } from "./pages";
+import { Dashboard, Login, PageNotFound, Profile } from "./pages";
 
 import LifeMilestone from "./pages/LifeMilestone";
 import LifeIncident from "./pages/LifeIncident";
@@ -38,6 +38,7 @@ function App() {
                 <Route path=":id/lifeincident" element={<LifeIncident />} />
               </Route>
             </Route>
+            <Route path="/profile" element={<Profile />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<PageNotFound />} />

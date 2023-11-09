@@ -15,7 +15,7 @@ export const menus = [
   {
     name: "Profile",
     icon: IoPersonOutline,
-    link: "/",
+    link: "/profile",
   },
   {
     name: "Notifications",
