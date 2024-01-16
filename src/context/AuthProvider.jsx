@@ -5,6 +5,7 @@ const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(getInitialState);
+  console.log("hey thi s");
 
   useEffect(() => {
     localStorage.setItem("appState", JSON.stringify(auth));

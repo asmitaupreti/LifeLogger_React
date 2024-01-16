@@ -22,6 +22,7 @@ export async function login(data) {
 
 export async function refreshToken(data) {
   try {
+    console.log(data, "refresh token");
     const response = await publicAxios.post("Auth/Refresh", data);
     return response.data;
   } catch (error) {
