@@ -1,28 +1,43 @@
-import { useState } from "react";
-import DisplaylistLayout from "../ui/DisplaylistLayout";
-import { FiEdit } from "react-icons/fi";
-import ModelLayout from "../ui/ModelLayout";
-import CreateLifeMilestone from "./CreateLifeMilestone";
-import { useQuery } from "@tanstack/react-query";
-import { useApiLifeMilestone } from "../services/useApiLifeMilestone";
-import { useLocation } from "react-router";
-import { Spinner } from "../components";
+import { useState } from 'react'
+import DisplaylistLayout from '../ui/DisplaylistLayout'
+import { FiEdit } from 'react-icons/fi'
+import ModelLayout from '../ui/ModelLayout'
+import CreateLifeMilestone from './CreateLifeMilestone'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useApiLifeMilestone } from '../services/useApiLifeMilestone'
+import { useLocation } from 'react-router'
+import { Spinner } from '../components'
+import { toast } from 'react-hot-toast'
 
 const DisplayMilestone = ({ navigate }) => {
-  const [toggleEditMenu, setToggleEditMenu] = useState(false);
-  const [showCreateLifeMilestone, setshowCreateLifeMilestone] = useState(false);
-  const location = useLocation();
+  const [toggleEditMenu, setToggleEditMenu] = useState(false)
+  const [showCreateLifeMilestone, setshowCreateLifeMilestone] = useState(false)
+  const location = useLocation()
 
-  const { getLifeMilestone } = useApiLifeMilestone();
+  const { getLifeMilestone, deleteLifeMilestone } = useApiLifeMilestone()
+
+  const queryClient = useQueryClient()
 
   const { isLoading, data, error } = useQuery({
-    queryKey: ["lifemilestone"],
-    queryFn: () => getLifeMilestone(location.pathname.split("/")[2]),
-  });
+    queryKey: ['lifemilestone'],
+    queryFn: () => getLifeMilestone(location.pathname.split('/')[2]),
+  })
 
-  if (isLoading) return <Spinner />;
+  const { isLoading: isDeleting, mutate } = useMutation({
+    mutationFn: (data) => deleteLifeMilestone(data),
+    onSuccess: () => {
+      toast.success('Life Milestone deleted successfully')
 
-  if (error) return <div>Failed to load</div>;
+      queryClient.invalidateQueries({
+        queryKey: ['lifemilestone'],
+      })
+    },
+    onError: (err) => toast.error(err.message),
+  })
+
+  if (isLoading) return <Spinner />
+
+  if (error) return <div>Failed to load</div>
   return (
     <DisplaylistLayout>
       {data.map((item, index) => (
@@ -51,8 +66,8 @@ const DisplayMilestone = ({ navigate }) => {
               <button
                 type="submit"
                 className="bg-black w-[30%] p-2.5 text-white rounded-md shadow-md"
-                // onClick={() => mutate(item)}
-                // disabled={isDeleting}
+                onClick={() => mutate(item)}
+                disabled={isDeleting}
               >
                 Delete
               </button>
@@ -65,9 +80,10 @@ const DisplayMilestone = ({ navigate }) => {
           <div className="flex  items-center justify-between h-5">
             <p
               className="text-xs bg-purple-100 p-2 rounded-md cursor-pointer"
-              onClick={() => navigate(`${item.projectId}/lifemilestone`)}
+              onClick={() => navigate(`${item.milestoneID}/lifeincident/`)}
             >
-              {"Life Milestone"}
+              {console.log(item)}
+              {'Life Milestone'}
             </p>
 
             <div className="bg-orange-100 px-3 py-2 rounded-full">
@@ -79,13 +95,13 @@ const DisplayMilestone = ({ navigate }) => {
               label="Edit Life MileStone"
               onClick={setshowCreateLifeMilestone}
             >
-              <CreateLifeMilestone />
+              <CreateLifeMilestone milestoneEdit={item} />
             </ModelLayout>
           )}
         </div>
       ))}
     </DisplaylistLayout>
-  );
-};
+  )
+}
 
-export default DisplayMilestone;
+export default DisplayMilestone
